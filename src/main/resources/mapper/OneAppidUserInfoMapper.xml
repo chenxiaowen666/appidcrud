@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaowen.appidcrud.mapper.OneAppidUserInfoMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="BaseResultMap" type="com.xiaowen.appidcrud.entity.OneAppidUserInfo">
+        <id column="appid_user_info_id" property="appidUserInfoId"/>
+        <result column="lv4mult_cn_name" property="lv4multCnName"/>
+        <result column="appid" property="appid"/>
+        <result column="factory" property="factory"/>
+        <result column="sub_product_owner" property="subProductOwner"/>
+        <result column="emails" property="emails"/>
+        <result column="business_personel" property="businessPersonel"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_by_name" property="createdByName"/>
+        <result column="creation_date" property="creationDate"/>
+        <result column="last_update_by" property="lastUpdateBy"/>
+        <result column="last_update_by_name" property="lastUpdateByName"/>
+        <result column="last_update_date" property="lastUpdateDate"/>
+        <result column="valid_flag" property="validFlag"/>
+    </resultMap>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.xiaowen.appidcrud.entity.OneAppidUserInfo">
+        INSERT INTO t_one_appid_user_info (
+            appid_user_info_id, lv4mult_cn_name, appid, factory, sub_product_owner,
+            emails, business_personel, created_by, created_by_name, creation_date,
+            last_update_by, last_update_by_name, last_update_date, valid_flag
+        ) VALUES (
+                     #{appidUserInfoId}, #{lv4multCnName}, #{appid}, #{factory}, #{subProductOwner},
+                     #{emails}, #{businessPersonel}, #{createdBy}, #{createdByName}, #{creationDate},
+                     #{lastUpdateBy}, #{lastUpdateByName}, #{lastUpdateDate}, #{validFlag}
+                 )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.xiaowen.appidcrud.entity.OneAppidUserInfo">
+        UPDATE t_one_appid_user_info
+        <set>
+            <if test="lv4multCnName != null">lv4mult_cn_name = #{lv4multCnName},</if>
+            <if test="appid != null">appid = #{appid},</if>
+            <if test="factory != null">factory = #{factory},</if>
+            <if test="subProductOwner != null">sub_product_owner = #{subProductOwner},</if>
+            <if test="emails != null">emails = #{emails},</if>
+            <if test="businessPersonel != null">business_personel = #{businessPersonel},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdByName != null">created_by_name = #{createdByName},</if>
+            <if test="creationDate != null">creation_date = #{creationDate},</if>
+            <if test="lastUpdateBy != null">last_update_by = #{lastUpdateBy},</if>
+            <if test="lastUpdateByName != null">last_update_by_name = #{lastUpdateByName},</if>
+            <if test="lastUpdateDate != null">last_update_date = #{lastUpdateDate},</if>
+            <if test="validFlag != null">valid_flag = #{validFlag},</if>
+        </set>
+        WHERE appid_user_info_id = #{appidUserInfoId}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="deleteById" parameterType="string">
+        DELETE FROM t_one_appid_user_info WHERE appid_user_info_id = #{appidUserInfoId}
+    </delete>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultMap="BaseResultMap" parameterType="string">
+        SELECT * FROM t_one_appid_user_info WHERE appid_user_info_id = #{appidUserInfoId}
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_one_appid_user_info
+    </select>
+
+    <!-- 分页查询及条件查询 -->
+    <select id="selectPage" resultMap="BaseResultMap" parameterType="com.xiaowen.appidcrud.entity.OneAppidUserInfo">
+        SELECT * FROM t_one_appid_user_info
+        <where>
+            <if test="lv4multCnName != null and lv4multCnName != ''">
+                AND lv4mult_cn_name LIKE CONCAT('%', #{lv4multCnName}, '%')
+            </if>
+            <if test="appid != null and appid != ''">
+                AND appid = #{appid}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND factory = #{factory}
+            </if>
+            <if test="validFlag != null and validFlag != ''">
+                AND valid_flag = #{validFlag}
+            </if>
+        </where>
+    </select>
+</mapper>
